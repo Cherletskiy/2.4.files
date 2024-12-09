@@ -64,3 +64,36 @@ shop_list = get_shop_list_by_dishes(['Запеченный картофель', 
 
 # shop_list_2 = get_shop_list_by_dishes(['Омлет', 'Фахитос'], 3)
 # pprint.pprint(shop_list_2)
+
+
+def get_sorted_file(files: list) -> str:
+    """
+    Функция принимает на вход список файлов,
+    возвращает содержимое всех файлов в одном файле отсортированном по количеству строк.
+    :param files: списки с названием файлов для сортировки и объединения
+    :return: строки из созданного файла. Содержимое файла предваряется служебной информацией на 2-х строках:
+     имя файла и количество строк в нем.
+    """
+    if not isinstance(files, list):
+        raise TypeError("Неверный тип данных")
+    if not files:
+        raise ValueError("Список файлов не может быть пустым")
+    file_result = 'result.txt'
+    new_file = open(file_result, "w", encoding="utf-8")
+    new_file.close()
+    with open(file_result, "a", encoding="utf-8") as f:
+        res = []
+        for file in files:
+            with open(file, "r", encoding="utf-8") as f2:
+                lines = [line.strip() for line in f2.readlines()]
+                res.append([f2.name, str(len(lines)), *lines, ""])
+        res.sort(key=lambda x: int(x[1]))
+        for i in res:
+            s = "\n".join(i)
+            f.write(s)
+    with open(file_result, "r", encoding="utf-8") as f:
+        return f.read()
+
+get_sorted_file(['1.txt', '2.txt', '3.txt'])
+# print(get_sorted_file(['1.txt', '2.txt', '3.txt']))
+
