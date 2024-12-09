@@ -23,12 +23,13 @@ def get_dict(recipes: str) -> dict:
             dict_rep[name] = []
             for i in range(count):
                 ing, count, unit = f.readline().strip().split(" | ")
-                dict_rep[name].append({"ingredient_name": ing, "quantity": count, "measure": unit})
+                dict_rep[name].append({"ingredient_name": ing, "quantity": int(count), "measure": unit})
             f.readline()
     return dict_rep
 
 
 cook_book = get_dict('recipes.txt')
-# print(cook_book)
-# pprint.pprint(cook_book)
+#print(cook_book)
+#pprint.pprint(cook_book)
+
 
